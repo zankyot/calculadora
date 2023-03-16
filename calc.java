@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
 import java.text.*;
 
 public class calc extends JFrame implements KeyListener {
@@ -110,7 +109,7 @@ public class calc extends JFrame implements KeyListener {
 		area.append(alinhaStringDir("----------------" + "\n"));
 		if(operador == "*") soma = soma* (Double.parseDouble(valor)/100);
 		else if(operador == "/") soma = soma / (Double.parseDouble(valor)/100);
-		area.append(alinhaStringDir(formatStrNumerica(""+ soma,decimais) + "="+ "\n"));
+		area.append(alinhaStringDir(formatStrNumerica("" + soma,decimais) + "=" + "\n"));
 		area.append(alinhaStringDir("" + "\n"));
 		visor.setText(formatStrNumerica("" + soma,decimais));
 		valoranterior = "" + soma;
@@ -118,7 +117,7 @@ public class calc extends JFrame implements KeyListener {
 		valor = "";
 	}
 	public void teclouVirgula() {
-		if (valor.length() == 1) valor = "0";
+		if (valor.lastIndexOf('.') == -1) valor = valor + ".";
 		visor.setText(valor);
 	}
 	public void teclouBackspace() {
@@ -135,7 +134,7 @@ public class calc extends JFrame implements KeyListener {
 	}
 	public void teclouMais() {
 		if(valor == "") valor = valoranterior;
-		area.append(alinhaStringDir("----------------"+"\n"));
+		area.append(alinhaStringDir("----------------" + "\n"));
 		area.append(alinhaStringDir(formatStrNumerica(valor,decimais) + "+" + "\n"));
 		soma = soma + Double.parseDouble(valor);
 		visor.setText(formatStrNumerica("" + soma,decimais));
@@ -146,7 +145,7 @@ public class calc extends JFrame implements KeyListener {
 	public void teclouMenos() {
 		if (valor == "") valor = valoranterior;
 		area.append(alinhaStringDir("---------------" + "\n"));
-		area.append(alinhaStringDir(formatStrNumerica(valor,decimais) +"-" +"\n"));
+		area.append(alinhaStringDir(formatStrNumerica(valor,decimais) + "-" +"\n"));
 		soma = soma - Double.parseDouble(valor);
 		visor.setText(formatStrNumerica("" + soma,decimais));
 		valoranterior = valor;
@@ -155,11 +154,13 @@ public class calc extends JFrame implements KeyListener {
 	}
 	public void teclouDiv() {
 		if (valor == "") valor = valoranterior;
-		area.append(alinhaStringDir("-----------------"));
+		area.append(alinhaStringDir("-----------------" + "\n"));
 		area.append(alinhaStringDir("" + "\n"));
 		area.append(alinhaStringDir(formatStrNumerica(valor,decimais) + "/" + "\n"));
 		soma = Double.parseDouble(valor);
 		visor.setText(formatStrNumerica("" + soma,decimais));
+		valor = "";
+		operador = "/";
 	}
 	public void teclouMult() {
 		if (valor == "") valor = valoranterior;
@@ -241,7 +242,7 @@ public calc () {
 		bce = new JButton ("CE");
 		bce.setToolTipText("Tecle E");
 		bdiv = new JButton ("/");
-		bmult = new JButton ("X");
+		bmult = new JButton ("*");
 		bmenos = new JButton ("-");
 		bmais = new JButton ("+");
 		bvirg = new JButton (",");
@@ -260,7 +261,7 @@ public calc () {
 		visor.setToolTipText("Valores até 14 digitos");
 		area = new JTextArea(12,15);
 		area.setEditable(false);
-		area.setFont(new Font("Courier New", Font.PLAIN,11));
+		area.setFont(new Font("Courier New", Font.BOLD,16));
 		scroll = new JScrollPane(area, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setBorder(new LineBorder(Color.pink,3,true));
@@ -303,7 +304,7 @@ public calc () {
 		addComponent (scroll, 0,0,5,1);
 		addComponent (visor, 1,0,5,1);
 		addComponent (b2d, 2,0,1,1);
-		addComponent (b4d, 2,0,1,1);
+		addComponent (b4d, 2,1,1,1);
 		addComponent (b6d, 2,2,3,1);
 		constraints.weightx = 0;
 		constraints.weightx = 5;
@@ -312,6 +313,7 @@ public calc () {
 		addComponent (bc, 4,4,1,1);
 		addComponent (bb, 5,4,1,1);
 		addComponent (bdiv, 3,1,1,1);
+		addComponent (bmult, 3,2,1,1);
 		addComponent (bmenos, 3,3,1,1);
 		addComponent (b7, 4,0,1,1);
 		addComponent (b8, 4,1,1,1);
@@ -370,4 +372,3 @@ public calc () {
 	}
 
 }
-
